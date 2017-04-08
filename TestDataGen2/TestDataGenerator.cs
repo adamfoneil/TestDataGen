@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TestData
@@ -26,11 +27,13 @@ namespace TestData
     {
         private readonly IDbConnection _connection;
         private readonly Random _rnd;
+        private readonly CancellationToken _cancellationToken;
 
-        public TestDataGenerator(IDbConnection connection)
+        public TestDataGenerator(IDbConnection connection, CancellationToken cancellationToken)
         {
             _connection = connection;
             _rnd = new Random();
+            _cancellationToken = cancellationToken;
         }
 
         public int BatchSize { get; set; } = 50;
@@ -42,6 +45,8 @@ namespace TestData
 
             for (int i = 0; i < recordCount; i++)
             {
+                if (_cancellationToken.IsCancellationRequested) break;
+
                 recordNum++;
                 TModel record = new TModel();
                 create.Invoke(record);
