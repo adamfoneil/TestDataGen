@@ -43,10 +43,12 @@ namespace Test
                         // save fee schedule
                     });
 
-                    tdg.Generate<Person>(850, 1250, p =>
+                    var feeSchedules = cn.Query<FeeSchedule>("SELECT * FROM [dbo].[FeeSchedule]").ToArray();
+
+                    tdg.Generate<Person>(750, 1500, p =>
                     {
                         p.OrganizationId = orgId;
-                        p.FeeScheduleId = tdg.RandomLookup<int>("SELECT [Id] FROM [dbo].[FeeSchedule] WHERE [OrganizationId]=@orgId", new { orgId = org.Id });
+                        p.FeeScheduleId = tdg.Random(feeSchedules, (fs) => fs.Id, (fs) => fs.OrganizationId == orgId);
                         p.FirstName = tdg.Random(Source.FirstName);
                         p.LastName = tdg.Random(Source.LastName);
                         p.Address = tdg.Random(Source.Address, 15);

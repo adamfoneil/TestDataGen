@@ -64,18 +64,43 @@ namespace TestData
             save.Invoke(_connection, records);
         }
 
+        /// <summary>
+        /// Generates a random number of records between the min and max you specify
+        /// </summary>
+        /// <typeparam name="TModel">Type of model class to create</typeparam>
+        /// <param name="minRecordCount">Low bound of random record count</param>
+        /// <param name="maxRecordCount">Hi bound of random record count</param>
+        /// <param name="create">Action that initializes the generated record</param>
+        /// <param name="save">Action that saves the generated records to the database according to BatchSize</param>
         public void Generate<TModel>(int minRecordCount, int maxRecordCount, Action<TModel> create, Action<IDbConnection, IEnumerable<TModel>> save) where TModel : new()
         {
             int recordCount = _rnd.Next(minRecordCount, maxRecordCount);
             Generate(recordCount, create, save);
         }
 
-        public string Random(Source source, int nullFrequency = 0)
+        public TValue Random<TValue, TModel>(TModel[] source, Func<TModel, TValue> select, Func<TModel, bool> predicate = null, int nullFrequency = 0)
+        {
+            var values = (predicate != null) ?
+                source.Where(row => predicate.Invoke(row)).ToArray() :
+                source;
+
+            if (!IsRandomNull(nullFrequency))
+            {
+                int index = _rnd.Next(0, values.Length);
+                return select(values[index]);
+            }
+            else
+            {
+                return default(TValue);
+            }            
+        }
+
+        private bool IsRandomNull(int nullFrequency)
         {
             throw new NotImplementedException();
         }
 
-        public T RandomLookup<T>(string query, object parameters)
+        public string Random(Source source, int nullFrequency = 0)
         {
             throw new NotImplementedException();
         }
