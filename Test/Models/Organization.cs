@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestDataGen2
+namespace Test.Models
 {
-    public class Class1
+    public class Organization
     {
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
