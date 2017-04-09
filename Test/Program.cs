@@ -21,7 +21,7 @@ namespace Test
             tdg.Generate<Person2>(100, 
                 p =>
                 {
-                    p.FirstName = tdg.Random(Source.FirstName);
+                    p.FirstName = tdg.Random(Source.FirstName, 10);
                     p.LastName = tdg.Random(Source.LastName);
                 }, records =>
                 {

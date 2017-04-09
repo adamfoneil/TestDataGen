@@ -168,7 +168,7 @@ namespace TestData
             if (nullFrequency > 99) throw new ArgumentException("NullFrequency cannot be greater than 99.");
 
             int value = _rnd.Next(100);
-            return (value > nullFrequency);
+            return (value < nullFrequency);
         }
 
         public string Random(Source source, int nullFrequency = 0)
