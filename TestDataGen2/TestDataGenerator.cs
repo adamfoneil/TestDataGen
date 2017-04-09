@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,15 +25,44 @@ namespace TestData
         WidgetName
     }
 
+    internal delegate string StringFunction();
+
     public class TestDataGenerator
-    {        
+    {
         private readonly Random _rnd;
         private readonly CancellationToken _cancellationToken;
+
+        private string[] _firstNames;
+        private string[] _lastNames;
+
+        private Dictionary<Source, StringFunction> _randomSources = null;
 
         public TestDataGenerator(CancellationToken cancellationToken)
         {            
             _rnd = new Random();
             _cancellationToken = cancellationToken;
+
+            _firstNames = GetStringArrayResource("TestData.Resources.FirstNames.txt");
+            _lastNames = GetStringArrayResource("TestData.Resources.LastNames.txt");
+
+            _randomSources = new Dictionary<Source, StringFunction>()
+            {
+                { Source.FirstName, GetRandomFirstName },
+                { Source.LastName, GetRandomLastName }
+            };
+        }
+
+        private string[] GetStringArrayResource(string resourceName)
+        {
+            List<string> results = new List<string>();
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    while (!reader.EndOfStream) results.Add(reader.ReadLine());
+                }
+            }
+            return results.ToArray();
         }
 
         public int BatchSize { get; set; } = 50;
@@ -104,6 +135,15 @@ namespace TestData
             }
         }
 
+        /// <summary>
+        /// Returns a random value from an array of TModel with an optional predicate and null frequency precentage
+        /// </summary>
+        /// <typeparam name="TValue">Type to return</typeparam>
+        /// <typeparam name="TModel">Type of possible values to select from</typeparam>
+        /// <param name="source">An array of TModel to select from</param>
+        /// <param name="select">Expression of type TValue that returns the property of TModel</param>
+        /// <param name="predicate">Optional -- filter to apply to source to restrict selection to a subset of source</param>
+        /// <param name="nullFrequency">Number between 0 and 99 that indicates how often null is returned</param>        
         public TValue Random<TValue, TModel>(TModel[] source, Func<TModel, TValue> select, Func<TModel, bool> predicate = null, int nullFrequency = 0)
         {
             var values = (predicate != null) ?
@@ -123,12 +163,40 @@ namespace TestData
 
         private bool IsRandomNull(int nullFrequency)
         {
-            throw new NotImplementedException();
+            if (nullFrequency == 0) return false;
+            if (nullFrequency < 0) throw new ArgumentException("NullFrequency cannot be less than zero.");
+            if (nullFrequency > 99) throw new ArgumentException("NullFrequency cannot be greater than 99.");
+
+            int value = _rnd.Next(100);
+            return (value > nullFrequency);
         }
 
         public string Random(Source source, int nullFrequency = 0)
         {
-            throw new NotImplementedException();
+            if (IsRandomNull(nullFrequency))
+            {
+                return _randomSources[source].Invoke();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private string GetRandomFirstName()
+        {
+            return GetRandomLine(_firstNames);
+        }
+
+        private string GetRandomLastName()
+        {
+            return GetRandomLine(_lastNames);
+        }
+
+        private string GetRandomLine(string[] array)
+        {
+            int lines = array.Length;
+            return array[_rnd.Next(lines - 1)];
         }
     }
 }
