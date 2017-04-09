@@ -24,14 +24,12 @@ namespace TestData
     }
 
     public class TestDataGenerator
-    {
-        private readonly IDbConnection _connection;
+    {        
         private readonly Random _rnd;
         private readonly CancellationToken _cancellationToken;
 
-        public TestDataGenerator(IDbConnection connection, CancellationToken cancellationToken)
-        {
-            _connection = connection;
+        public TestDataGenerator(CancellationToken cancellationToken)
+        {            
             _rnd = new Random();
             _cancellationToken = cancellationToken;
         }
