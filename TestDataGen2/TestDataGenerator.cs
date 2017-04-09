@@ -86,7 +86,7 @@ namespace TestData
             TModel priorItem = default(TModel);
             foreach (var item in values)
             {                
-                item.MinBucketValue = (priorItem != null) ? priorItem.MinBucketValue + 1 : 0;
+                item.MinBucketValue = (priorItem != null) ? priorItem.MaxBucketValue + 1 : 0;
                 item.MaxBucketValue = item.MinBucketValue + item.Factor;
                 priorItem = item;
             }
