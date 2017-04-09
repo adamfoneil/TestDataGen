@@ -175,11 +175,11 @@ namespace TestData
         {
             if (IsRandomNull(nullFrequency))
             {
-                return _randomSources[source].Invoke();
+                return null;
             }
             else
             {
-                return null;
+                return _randomSources[source].Invoke();                
             }
         }
 
