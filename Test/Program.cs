@@ -23,12 +23,12 @@ namespace Test
                 {
                     p.FirstName = tdg.Random(Source.FirstName, 10);
                     p.LastName = tdg.Random(Source.LastName);
-                    //p.Sex = tdg.Random(new char[] { 'M', 'F' }, c => c);
-                    p.Sex = tdg.RandomWeighted(new SexWeighted[]
+                    p.Sex = tdg.Random(new char[] { 'M', 'F' });
+                    /*p.Sex = tdg.RandomWeighted(new SexWeighted[]
                     {
                         new SexWeighted() { Letter = 'M', Factor = 30 },
                         new SexWeighted() { Letter = 'F', Factor = 1 }
-                    }, m => m.Letter);
+                    }, m => m.Letter);*/
 
                 }, records =>
                 {

@@ -161,6 +161,11 @@ namespace TestData
             }            
         }
 
+        public TValue Random<TValue>(TValue[] source, Func<TValue, bool> predicate = null, int nullFrequency = 0)
+        {
+            return Random(source, item => item, predicate, nullFrequency);
+        }
+
         private bool IsRandomNull(int nullFrequency)
         {
             if (nullFrequency == 0) return false;
