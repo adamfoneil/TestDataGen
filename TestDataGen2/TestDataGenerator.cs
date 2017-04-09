@@ -124,14 +124,14 @@ namespace TestData
 
             int totalFactor = priorItem.MaxBucketValue;
 
-            if (!IsRandomNull(nullFrequency))
+            if (IsRandomNull(nullFrequency))
             {
-                int weightedIndex = _rnd.Next(0, totalFactor);
-                return select(values.First(item => item.MinBucketValue <= weightedIndex && weightedIndex < item.MaxBucketValue));
+                return default(TValue);
             }
             else
             {
-                return default(TValue);
+                int weightedIndex = _rnd.Next(0, totalFactor);
+                return select(values.First(item => item.MinBucketValue <= weightedIndex && weightedIndex <= item.MaxBucketValue));
             }
         }
 
