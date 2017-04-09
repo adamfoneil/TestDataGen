@@ -50,6 +50,7 @@
     <Compile Include="Models\FeeSchedule.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Person2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

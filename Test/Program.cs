@@ -15,54 +15,24 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            CancellationTokenSource cts = new CancellationTokenSource();            
-            
-            using (SqlConnection cn = new SqlConnection("whatever"))
-            {
-                cn.Open();
-                var tdg = new TestDataGenerator(cn, cts.Token);
+            CancellationTokenSource cts = new CancellationTokenSource();
+            TestDataGenerator tdg = new TestDataGenerator(cts.Token);
 
-                tdg.Generate<Organization>(3, org =>
+            tdg.Generate<Person2>(100, 
+                p =>
                 {
-                    org.Name = tdg.Random(Source.CompanyName);
-                }, (records) =>
+                    p.FirstName = tdg.Random(Source.FirstName);
+                    p.LastName = tdg.Random(Source.LastName);
+                }, records =>
                 {
-                    // save org
+                    Console.WriteLine("--- batch ---");
+                    foreach (var record in records)
+                    {
+                        Console.WriteLine($"first = {record.FirstName}, last = {record.LastName}");
+                    }
                 });
 
-                var orgIds = cn.Query<int>("SELECT [Id] FROM [Organization]");
-
-                foreach (int orgId in orgIds)
-                {
-                    tdg.Generate<FeeSchedule>(1, 4, fs =>
-                    {
-                        fs.OrganizationId = orgId;
-                        fs.Name = tdg.Random(Source.WidgetName);
-                    }, (records) =>
-                    {
-                        // save fee schedule
-                    });
-
-                    var feeSchedules = cn.Query<FeeSchedule>("SELECT * FROM [dbo].[FeeSchedule]").ToArray();
-
-                    tdg.Generate<Person>(750, 1500, p =>
-                    {
-                        p.OrganizationId = orgId;
-                        p.FeeScheduleId = tdg.Random(feeSchedules, (fs) => fs.Id, (fs) => fs.OrganizationId == orgId);
-                        p.FirstName = tdg.Random(Source.FirstName);
-                        p.LastName = tdg.Random(Source.LastName);
-                        p.Address = tdg.Random(Source.Address, 15);
-                        p.City = tdg.Random(Source.City, 15);
-                        p.State = tdg.Random(Source.USState);
-                        p.ZipCode = tdg.Random(Source.USZipCode);
-                        p.HomePhone = tdg.Random(Source.USPhoneNumber, 35);
-                        p.WorkPhone = tdg.Random(Source.USPhoneNumber, 50);
-                    }, (records) =>
-                    {
-                        // save person
-                    });
-                }
-            }
+            Console.ReadLine();
         }
     }
 }
