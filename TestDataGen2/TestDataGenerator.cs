@@ -37,10 +37,11 @@ namespace TestData
         }
 
         public int BatchSize { get; set; } = 50;
+        public TimeSpan MaxRunTime { get; set; } = TimeSpan.FromMinutes(5);
 
-        public void Generate<TModel>(int recordCount, Action<TModel> create, Action<IDbConnection, IEnumerable<TModel>> save) where TModel : new()
+        public void Generate<TModel>(int recordCount, Action<TModel> create, Action<IEnumerable<TModel>> save) where TModel : new()
         {
-            List<TModel> records = new List<TModel>();
+            List<TModel> records = new List<TModel>(BatchSize);
             int recordNum = 0;
 
             for (int i = 0; i < recordCount; i++)
@@ -54,14 +55,14 @@ namespace TestData
 
                 if (recordNum == BatchSize)
                 {
-                    save.Invoke(_connection, records);
+                    save.Invoke(records);
                     records.Clear();
                     recordNum = 0;
                 }
             }
 
             // any leftovers
-            save.Invoke(_connection, records);
+            save.Invoke(records);
         }
 
         /// <summary>
@@ -72,10 +73,37 @@ namespace TestData
         /// <param name="maxRecordCount">Hi bound of random record count</param>
         /// <param name="create">Action that initializes the generated record</param>
         /// <param name="save">Action that saves the generated records to the database according to BatchSize</param>
-        public void Generate<TModel>(int minRecordCount, int maxRecordCount, Action<TModel> create, Action<IDbConnection, IEnumerable<TModel>> save) where TModel : new()
+        public void Generate<TModel>(int minRecordCount, int maxRecordCount, Action<TModel> create, Action<IEnumerable<TModel>> save) where TModel : new()
         {
             int recordCount = _rnd.Next(minRecordCount, maxRecordCount);
             Generate(recordCount, create, save);
+        }
+
+        public TValue RandomWeighted<TValue, TModel>(TModel[] source, Func<TModel, TValue> select, Func<TModel, bool> predicate = null, int nullFrequency = 0) where TModel : IWeighted
+        {
+            var values = (predicate != null) ?
+                source.Where(row => predicate.Invoke(row)).ToArray() :
+                source;
+
+            TModel priorItem = default(TModel);
+            foreach (var item in values)
+            {                
+                item.MinBucketValue = (priorItem != null) ? priorItem.MinBucketValue + 1 : 0;
+                item.MaxBucketValue = item.MinBucketValue + item.Factor;
+                priorItem = item;
+            }
+
+            int totalFactor = priorItem.MaxBucketValue;
+
+            if (!IsRandomNull(nullFrequency))
+            {
+                int weightedIndex = _rnd.Next(0, totalFactor);
+                return select(values.First(item => item.MinBucketValue <= weightedIndex && weightedIndex < item.MaxBucketValue));
+            }
+            else
+            {
+                return default(TValue);
+            }
         }
 
         public TValue Random<TValue, TModel>(TModel[] source, Func<TModel, TValue> select, Func<TModel, bool> predicate = null, int nullFrequency = 0)

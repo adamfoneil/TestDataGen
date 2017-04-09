@@ -25,7 +25,7 @@ namespace Test
                 tdg.Generate<Organization>(3, org =>
                 {
                     org.Name = tdg.Random(Source.CompanyName);
-                }, (connection, records) =>
+                }, (records) =>
                 {
                     // save org
                 });
@@ -38,7 +38,7 @@ namespace Test
                     {
                         fs.OrganizationId = orgId;
                         fs.Name = tdg.Random(Source.WidgetName);
-                    }, (connection, records) =>
+                    }, (records) =>
                     {
                         // save fee schedule
                     });
@@ -57,7 +57,7 @@ namespace Test
                         p.ZipCode = tdg.Random(Source.USZipCode);
                         p.HomePhone = tdg.Random(Source.USPhoneNumber, 35);
                         p.WorkPhone = tdg.Random(Source.USPhoneNumber, 50);
-                    }, (connection, records) =>
+                    }, (records) =>
                     {
                         // save person
                     });
