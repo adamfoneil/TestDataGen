@@ -32,37 +32,20 @@ namespace TestData
         private readonly Random _rnd;
         private readonly CancellationToken _cancellationToken;
 
-        private string[] _firstNames;
-        private string[] _lastNames;
-
-        private Dictionary<Source, StringFunction> _randomSources = null;
+        private Dictionary<Source, RandomResourceData> _randomSources = null;
 
         public TestDataGenerator(CancellationToken cancellationToken)
         {            
             _rnd = new Random();
             _cancellationToken = cancellationToken;
 
-            _firstNames = GetStringArrayResource("TestData.Resources.FirstNames.txt");
-            _lastNames = GetStringArrayResource("TestData.Resources.LastNames.txt");
-
-            _randomSources = new Dictionary<Source, StringFunction>()
+            _randomSources = new Dictionary<Source, RandomResourceData>()
             {
-                { Source.FirstName, GetRandomFirstName },
-                { Source.LastName, GetRandomLastName }
+                { Source.FirstName, new RandomResourceData("TestData.Resources.FirstNames.txt") },
+                { Source.LastName, new RandomResourceData("TestData.Resources.LastNames.txt") },
+                { Source.Address, new RandomAddress() },
+                { Source.City, new RandomResourceData("TestData.Resources.Cities.txt") }
             };
-        }
-
-        private string[] GetStringArrayResource(string resourceName)
-        {
-            List<string> results = new List<string>();
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    while (!reader.EndOfStream) results.Add(reader.ReadLine());
-                }
-            }
-            return results.ToArray();
         }
 
         public int BatchSize { get; set; } = 50;
@@ -184,24 +167,8 @@ namespace TestData
             }
             else
             {
-                return _randomSources[source].Invoke();                
+                return _randomSources[source].GetData();                
             }
-        }
-
-        private string GetRandomFirstName()
-        {
-            return GetRandomLine(_firstNames);
-        }
-
-        private string GetRandomLastName()
-        {
-            return GetRandomLine(_lastNames);
-        }
-
-        private string GetRandomLine(string[] array)
-        {
-            int lines = array.Length;
-            return array[_rnd.Next(lines - 1)];
         }
     }
 }

@@ -41,12 +41,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IWeighted.cs" />
+    <Compile Include="RandomAddress.cs" />
+    <Compile Include="RandomResourceData.cs" />
     <Compile Include="TestDataGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\FirstNames.txt" />
     <EmbeddedResource Include="Resources\LastNames.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Cities.txt" />
+    <Content Include="Resources\StreetNames.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
