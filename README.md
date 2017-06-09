@@ -6,6 +6,8 @@ There are several test data generator apps for SQL Server -- Red Gate, ApexSQL, 
 
 This repo is just my baby steps towards a test data generator app for SQL Server. There is no user interface yet, just some low-level randomization and data access methods. I am not positive that I want to to build a GUI at all -- right now I'm just exploring feasibility.
 
-Here's an example I used today (6/8/17) that generated 100 random "customer" records via an MVC action:
+Here's an example I used today (6/8/17) that generated 100 random "customer" records via an MVC action. Although my example uses the Postulate [SaveMultiple](https://github.com/adamosoftware/Postulate.Orm/blob/master/PostulateV1/Abstract/SqlDb_SaveMultiple.cs#L38) method to save the data, this library has no dependence on Postulate.
+
+Here's a link to the [Generate](https://github.com/adamosoftware/TestDataGen/blob/master/TestDataGen2/TestDataGenerator.cs#L54) method in this library that does the actual work.
 
 ![img](/tdg_sample.png)
