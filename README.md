@@ -8,4 +8,6 @@ This repo is just my baby steps towards a test data generator app for SQL Server
 
 Here's an example I used today (6/8/17) that generated 100 random "customer" records via an MVC action. Although my example uses the Postulate [SaveMultiple](https://github.com/adamosoftware/Postulate.Orm/blob/master/PostulateV1/Abstract/SqlDb_SaveMultiple.cs#L38) method to save the data, this library has no dependence on Postulate.
 
+Here's a link to the [Generate](https://github.com/adamosoftware/TestDataGen/blob/master/TestDataGen2/TestDataGenerator.cs#L54) method in this library that does the actual work.
+
 ![img](/tdg_sample.png)
