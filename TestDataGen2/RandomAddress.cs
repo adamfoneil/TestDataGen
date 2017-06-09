@@ -8,13 +8,13 @@ namespace AdamOneilSoftware
 {
     internal class RandomAddress : RandomResourceData
     {
-        public RandomAddress() : base("AdamOneilSoftware.Resources.StreetNames.txt")
+        public RandomAddress(Random random) : base("AdamOneilSoftware.Resources.StreetNames.txt", random)
         {
         }
 
         protected override string Prepend()
         {
-            return _rnd.Next(5000).ToString() + " ";
+            return Random.Next(5000).ToString() + " ";
         }
     }
 }

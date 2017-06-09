@@ -32,19 +32,21 @@ namespace AdamOneilSoftware
         private readonly Random _rnd;
         private readonly CancellationToken _cancellationToken;
 
-        private Dictionary<Source, RandomResourceData> _randomSources = null;
+        private Dictionary<Source, IRandomData> _randomSources = null;
 
         public TestDataGenerator(CancellationToken cancellationToken = default(CancellationToken))
         {            
             _rnd = new Random();
             _cancellationToken = cancellationToken;
 
-            _randomSources = new Dictionary<Source, RandomResourceData>()
+            _randomSources = new Dictionary<Source, IRandomData>()
             {
-                { Source.FirstName, new RandomResourceData("AdamOneilSoftware.Resources.FirstNames.txt") },
-                { Source.LastName, new RandomResourceData("AdamOneilSoftware.Resources.LastNames.txt") },
-                { Source.Address, new RandomAddress() },
-                { Source.City, new RandomResourceData("AdamOneilSoftware.Resources.Cities.txt") }
+                { Source.FirstName, new RandomResourceData("AdamOneilSoftware.Resources.FirstNames.txt", _rnd) },
+                { Source.LastName, new RandomResourceData("AdamOneilSoftware.Resources.LastNames.txt", _rnd) },
+                { Source.Address, new RandomAddress(_rnd) },
+                { Source.City, new RandomResourceData("AdamOneilSoftware.Resources.Cities.txt", _rnd) },
+                { Source.USState, new RandomResourceData("AdamOneilSoftware.Resources.USStates.txt", _rnd) },
+                { Source.USZipCode, new RandomZipCode(_rnd) }
             };
         }
 
@@ -171,6 +173,19 @@ namespace AdamOneilSoftware
             {
                 return _randomSources[source].GetData();                
             }
+        }
+
+        internal static string GetRandomString(Random rnd, string allowedChars, int length)
+        {
+            string result = string.Empty;
+
+            for (int i = 0; i < length; i++)
+            {
+                int charIndex = rnd.Next(allowedChars.Length);
+                result += allowedChars[charIndex].ToString();
+            }
+
+            return result;
         }
     }
 }

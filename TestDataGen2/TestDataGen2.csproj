@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRandomData.cs" />
     <Compile Include="IWeighted.cs" />
     <Compile Include="RandomAddress.cs" />
     <Compile Include="RandomResourceData.cs" />
+    <Compile Include="RandomZipCode.cs" />
     <Compile Include="TestDataGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +55,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Cities.txt" />
     <EmbeddedResource Include="Resources\StreetNames.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\USStates.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

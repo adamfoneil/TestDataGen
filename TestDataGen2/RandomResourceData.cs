@@ -5,21 +5,21 @@ using System.Reflection;
 
 namespace AdamOneilSoftware
 {
-    internal class RandomResourceData
-    {
-        protected readonly Random _rnd;
-
+    internal class RandomResourceData : IRandomData
+    {        
         private readonly string _resourceName;
         private readonly string[] _data;        
         private readonly int _dataLength;
 
-        public RandomResourceData(string resourceName)
-        {
-            _rnd = new Random();
+        public RandomResourceData(string resourceName, Random random)
+        {            
             _resourceName = resourceName;
             _data = GetStringArrayResource(resourceName);
             _dataLength = _data.Length;
+            Random = random;
         }
+
+        public Random Random { get; set; }
 
         private string[] GetStringArrayResource(string resourceName)
         {
@@ -36,7 +36,7 @@ namespace AdamOneilSoftware
 
         public string GetData()
         {            
-            return Prepend() + _data[_rnd.Next(_dataLength - 1)] + Append();
+            return Prepend() + _data[Random.Next(_dataLength - 1)] + Append();
         }
 
         protected virtual string Prepend()
