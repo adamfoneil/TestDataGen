@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestData
+namespace AdamOneilSoftware
 {
     internal class RandomAddress : RandomResourceData
     {
-        public RandomAddress() : base("TestData.Resources.StreetNames.txt")
+        public RandomAddress() : base("AdamOneilSoftware.Resources.StreetNames.txt")
         {
         }
 

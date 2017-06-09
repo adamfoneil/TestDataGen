@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TestData
+namespace AdamOneilSoftware
 {
     public enum Source
     {
@@ -34,17 +34,17 @@ namespace TestData
 
         private Dictionary<Source, RandomResourceData> _randomSources = null;
 
-        public TestDataGenerator(CancellationToken cancellationToken)
+        public TestDataGenerator(CancellationToken cancellationToken = default(CancellationToken))
         {            
             _rnd = new Random();
             _cancellationToken = cancellationToken;
 
             _randomSources = new Dictionary<Source, RandomResourceData>()
             {
-                { Source.FirstName, new RandomResourceData("TestData.Resources.FirstNames.txt") },
-                { Source.LastName, new RandomResourceData("TestData.Resources.LastNames.txt") },
+                { Source.FirstName, new RandomResourceData("AdamOneilSoftware.Resources.FirstNames.txt") },
+                { Source.LastName, new RandomResourceData("AdamOneilSoftware.Resources.LastNames.txt") },
                 { Source.Address, new RandomAddress() },
-                { Source.City, new RandomResourceData("TestData.Resources.Cities.txt") }
+                { Source.City, new RandomResourceData("AdamOneilSoftware.Resources.Cities.txt") }
             };
         }
 
@@ -72,6 +72,8 @@ namespace TestData
                     recordNum = 0;
                 }
             }
+
+            if (_cancellationToken.IsCancellationRequested) return;
 
             // any leftovers
             save.Invoke(records);

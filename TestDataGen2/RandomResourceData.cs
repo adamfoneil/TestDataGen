@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace TestData
+namespace AdamOneilSoftware
 {
     internal class RandomResourceData
     {

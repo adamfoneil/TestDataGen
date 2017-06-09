@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AoTestDataGen</id>
+    <version>$version$-alpha</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/adamosoftware/TestDataGen</projectUrl>
+    <description>Test Data Generation Library</description>
+    <copyright>Copyright (c) Adam O'Neil Software 2017</copyright>
+    <tags>testdata generate</tags>
+  </metadata>
+</package>

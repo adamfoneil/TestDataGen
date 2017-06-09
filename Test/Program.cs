@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Test.Models;
-using TestData;
+using AdamOneilSoftware;
 using Dapper;
 
 namespace Test
@@ -14,21 +14,20 @@ namespace Test
     class Program
     {
         static void Main(string[] args)
-        {
-            CancellationTokenSource cts = new CancellationTokenSource();
-            TestDataGenerator tdg = new TestDataGenerator(cts.Token);
+        {            
+            TestDataGenerator tdg = new TestDataGenerator();
 
             tdg.Generate<Person2>(100, 
                 p =>
                 {
                     p.FirstName = tdg.Random(Source.FirstName, 10);
                     p.LastName = tdg.Random(Source.LastName);
-                    p.Sex = tdg.Random(new char[] { 'M', 'F' });
-                    /*p.Sex = tdg.RandomWeighted(new SexWeighted[]
+                    //p.Sex = tdg.Random(new char[] { 'M', 'F' });
+                    p.Sex = tdg.RandomWeighted(new SexWeighted[]
                     {
                         new SexWeighted() { Letter = 'M', Factor = 30 },
                         new SexWeighted() { Letter = 'F', Factor = 1 }
-                    }, m => m.Letter);*/
+                    }, m => m.Letter);
 
                 }, records =>
                 {
