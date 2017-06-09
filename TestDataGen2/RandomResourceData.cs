@@ -14,7 +14,7 @@ namespace AdamOneilSoftware
         public RandomResourceData(string resourceName, Random random)
         {            
             _resourceName = resourceName;
-            _data = GetStringArrayResource(resourceName);
+            _data = GetStringArrayResource($"AdamOneilSoftware.Resources.{resourceName}");
             _dataLength = _data.Length;
             Random = random;
         }

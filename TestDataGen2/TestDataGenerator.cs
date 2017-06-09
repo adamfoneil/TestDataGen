@@ -25,14 +25,13 @@ namespace AdamOneilSoftware
         WidgetName
     }
 
-    internal delegate string StringFunction();
-
     public class TestDataGenerator
     {
         private readonly Random _rnd;
         private readonly CancellationToken _cancellationToken;
 
         private Dictionary<Source, IRandomData> _randomSources = null;
+        private RandomFormattedString _rndFormatted;
 
         public TestDataGenerator(CancellationToken cancellationToken = default(CancellationToken))
         {            
@@ -41,12 +40,17 @@ namespace AdamOneilSoftware
 
             _randomSources = new Dictionary<Source, IRandomData>()
             {
-                { Source.FirstName, new RandomResourceData("AdamOneilSoftware.Resources.FirstNames.txt", _rnd) },
-                { Source.LastName, new RandomResourceData("AdamOneilSoftware.Resources.LastNames.txt", _rnd) },
+                { Source.FirstName, new RandomResourceData("FirstNames.txt", _rnd) },
+                { Source.LastName, new RandomResourceData("LastNames.txt", _rnd) },
                 { Source.Address, new RandomAddress(_rnd) },
-                { Source.City, new RandomResourceData("AdamOneilSoftware.Resources.Cities.txt", _rnd) },
-                { Source.USState, new RandomResourceData("AdamOneilSoftware.Resources.USStates.txt", _rnd) },
-                { Source.USZipCode, new RandomZipCode(_rnd) }
+                { Source.City, new RandomResourceData("Cities.txt", _rnd) },
+                { Source.USState, new RandomResourceData("USStates.txt", _rnd) },
+                { Source.USZipCode, new RandomFormattedString(_rnd) { Format = "00000" } },
+                { Source.USZipCodePlus4, new RandomFormattedString(_rnd) { Format = "00000-0000" } },
+                { Source.USPhoneNumber, new RandomFormattedString(_rnd) { Format = "(000) 000-0000" } },
+                { Source.WidgetName, new RandomWidget(_rnd) },
+                { Source.CompanyName, new RandomResourceData("CompanyNames.txt", _rnd) }
+                //{ Source.Email, new RandomEmail(_rnd) }
             };
         }
 
@@ -55,6 +59,8 @@ namespace AdamOneilSoftware
 
         public void Generate<TModel>(int recordCount, Action<TModel> create, Action<IEnumerable<TModel>> save) where TModel : new()
         {
+            _rndFormatted = new RandomFormattedString(_rnd);
+
             List<TModel> records = new List<TModel>(BatchSize);
             int recordNum = 0;
 
@@ -175,17 +181,17 @@ namespace AdamOneilSoftware
             }
         }
 
-        internal static string GetRandomString(Random rnd, string allowedChars, int length)
+        public string RandomFormatted(string format, int nullFrequency = 0)
         {
-            string result = string.Empty;
-
-            for (int i = 0; i < length; i++)
+            if (IsRandomNull(nullFrequency))
             {
-                int charIndex = rnd.Next(allowedChars.Length);
-                result += allowedChars[charIndex].ToString();
+                return null;
             }
-
-            return result;
+            else
+            {
+                _rndFormatted.Format = format;
+                return _rndFormatted.GetData();
+            }
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Test
                     //p.Sex = tdg.Random(new char[] { 'M', 'F' });
                     p.State = tdg.Random(Source.USState);
                     p.ZipCode = tdg.Random(Source.USZipCode);
+                    p.Phone = tdg.RandomFormatted("000.0000");
+                    p.ItemName = tdg.Random(Source.WidgetName);
                     p.Sex = tdg.RandomWeighted(new SexWeighted[]
                     {
                         new SexWeighted() { Letter = 'M', Factor = 30 },
@@ -36,7 +38,7 @@ namespace Test
                     Console.WriteLine("--- batch ---");
                     foreach (var record in records)
                     {
-                        Console.WriteLine($"first = {record.FirstName}, last = {record.LastName}, sex = {record.Sex}, state = {record.State}, zip = {record.ZipCode}");
+                        Console.WriteLine($"first = {record.FirstName}, last = {record.LastName}, sex = {record.Sex}, state = {record.State}, zip = {record.ZipCode}, item = {record.ItemName}");
                     }
                 });
 

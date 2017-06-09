@@ -8,7 +8,7 @@ namespace AdamOneilSoftware
 {
     internal class RandomAddress : RandomResourceData
     {
-        public RandomAddress(Random random) : base("AdamOneilSoftware.Resources.StreetNames.txt", random)
+        public RandomAddress(Random random) : base("StreetNames.txt", random)
         {
         }
 

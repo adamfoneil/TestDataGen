@@ -14,6 +14,8 @@ namespace Test.Models
         public char Sex { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public string Phone { get; set; }
+        public string ItemName { get; set; }
     }
 
     public class SexWeighted : IWeighted

@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPersonName.cs" />
     <Compile Include="IRandomData.cs" />
     <Compile Include="IWeighted.cs" />
     <Compile Include="RandomAddress.cs" />
+    <Compile Include="RandomFormattedString.cs" />
     <Compile Include="RandomResourceData.cs" />
-    <Compile Include="RandomZipCode.cs" />
+    <Compile Include="RandomWidget.cs" />
     <Compile Include="TestDataGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\USStates.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Widgets.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CompanyNames.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
