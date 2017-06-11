@@ -8,6 +8,14 @@ This repo is just my baby steps towards a test data generator app for SQL Server
 
 Here's an example I used today (6/8/17) that generated 100 random "customer" records via an MVC action. Although my example uses the Postulate [SaveMultiple](https://github.com/adamosoftware/Postulate.Orm/blob/master/PostulateV1/Abstract/SqlDb_SaveMultiple.cs#L38) method to save the data, this library has no dependence on Postulate.
 
-Here's a link to the [Generate](https://github.com/adamosoftware/TestDataGen/blob/master/TestDataGen2/TestDataGenerator.cs#L54) method in this library that does the actual work.
+Here's a link to the [Generate](https://github.com/adamosoftware/TestDataGen/blob/master/TestDataGen2/TestDataGenerator.cs#L60) method in this library that does the actual work. Also, note the [Random](/TestDataGen2/TestDataGenerator.cs#L140) method. There are a couple overloads of it (as well as a [RandomWeighted](/TestDataGen2/TestDataGenerator.cs#L104) method). This is what supplies individual random values to a property when generating a random object.
 
 ![img](/tdg_sample.png)
+
+Here's a couple more examples. Here is a simple use of the Random method to select any character from an array. There's no weighing in effect, so the 'M' and 'F' values will be more or less equally used:
+
+![img](/tdg_random_sex1.png)
+
+But you can also weigh items in source array differently so that certain selections come up more often. Here's an example that uses the RandomWeighted method to make 'M' come up 3x as often as 'F'. It relies on the [IWeighted](/TestDataGen2/IWeighted.cs) interface.
+
+![img](/tdg_random_sex2.png)
