@@ -1,5 +1,6 @@
 ﻿using AdamOneilSoftware;
 using Dapper;
+using Postulate.Orm.Extensions;
 using System;
 using System.Linq;
 using Test2.Models;
@@ -33,21 +34,25 @@ namespace Test2
                 orgIds = cn.Query<int>("SELECT [Id] FROM [Organization]").ToArray();
                 items = cn.Query("SELECT [OrganizationId], [Id] FROM [Item]").ToArray();
                 orders = cn.Query("SELECT [OrganizationId], [Id] FROM [Order]").ToArray();
-            }
 
-            foreach (var order in orders)
-            {
-                _tdg.Generate<OrderItem>(1, 7, oi =>
+                _tdg.BatchSize = 1;
+                foreach (var order in orders)
                 {
-                    oi.OrderId = order.Id;
-                    oi.ItemId = _tdg.Random(items, item => item.Id, item => item.OrganizationId == order.OrganizationId);
-                    oi.Quantity = _tdg.RandomInRange(1, 25).Value;
-                    oi.UnitPrice = _db.Find<Item>(oi.ItemId).UnitPrice;
-                    oi.ExtPrice = oi.Quantity * oi.UnitPrice;
-                }, records =>
-                {
-                    _db.SaveMultiple(records);
-                });
+                    _tdg.Generate<OrderItem>(1, 7, oi =>
+                    {
+                        do
+                        {
+                            oi.OrderId = order.Id;
+                            oi.ItemId = _tdg.Random(items, item => item.Id, item => item.OrganizationId == order.OrganizationId);
+                            oi.Quantity = _tdg.RandomInRange(1, 25).Value;
+                            oi.UnitPrice = _db.Find<Item>(oi.ItemId).UnitPrice;
+                            oi.ExtPrice = oi.Quantity * oi.UnitPrice;
+                        } while (cn.Exists("[OrderItem] WHERE [OrderId]=@orderId AND [ItemId]=@itemId", new { orderId = oi.OrderId, itemId = oi.ItemId }));
+                    }, records =>
+                    {
+                        _db.SaveMultiple(cn, records);
+                    });
+                }
             }
         }
 
