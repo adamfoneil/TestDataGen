@@ -19,9 +19,11 @@ namespace Test2.Models
         public int ItemId { get; set; }
 
         public int Quantity { get; set; }
-
+        
+        [DecimalPrecision(7,2)]
         public decimal UnitPrice { get; set; }
 
+        [DecimalPrecision(7, 2)]
         public decimal ExtPrice { get; set; }
     }
 }

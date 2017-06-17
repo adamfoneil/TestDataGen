@@ -1,10 +1,7 @@
 ﻿using AdamOneilSoftware;
 using Dapper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test2.Models;
 
 namespace Test2
@@ -19,8 +16,39 @@ namespace Test2
             //CreateOrgs();
             //CreateItems();
             //CreateCustomers();
-            CreateOrders();
+            //CreateOrders();
+            CreateOrderItems();
             
+        }
+
+        private static void CreateOrderItems()
+        {
+            int[] orgIds = null;
+            dynamic[] items = null;
+            dynamic[] orders = null;
+
+            using (var cn = _db.GetConnection())
+            {
+                cn.Open();
+                orgIds = cn.Query<int>("SELECT [Id] FROM [Organization]").ToArray();
+                items = cn.Query("SELECT [OrganizationId], [Id] FROM [Item]").ToArray();
+                orders = cn.Query("SELECT [OrganizationId], [Id] FROM [Order]").ToArray();
+            }
+
+            foreach (var order in orders)
+            {
+                _tdg.Generate<OrderItem>(1, 7, oi =>
+                {
+                    oi.OrderId = order.Id;
+                    oi.ItemId = _tdg.Random(items, item => item.Id, item => item.OrganizationId == order.OrganizationId);
+                    oi.Quantity = _tdg.RandomInRange(1, 25).Value;
+                    oi.UnitPrice = _db.Find<Item>(oi.ItemId).UnitPrice;
+                    oi.ExtPrice = oi.Quantity * oi.UnitPrice;
+                }, records =>
+                {
+                    _db.SaveMultiple(records);
+                });
+            }
         }
 
         private static void CreateOrders()
