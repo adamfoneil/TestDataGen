@@ -36,7 +36,7 @@ namespace AdamOneilSoftware
 
         public string GetData()
         {            
-            return Prepend() + _data[Random.Next(_dataLength - 1)] + Append();
+            return Prepend() + _data[Random.Next(_dataLength)] + Append();
         }
 
         protected virtual string Prepend()
