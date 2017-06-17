@@ -15,6 +15,7 @@ namespace Test.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string Phone { get; set; }
+        public string Email { get; set; }
         public string ItemName { get; set; }
     }
 

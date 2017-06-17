@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace AdamOneilSoftware
 {
@@ -20,7 +16,7 @@ namespace AdamOneilSoftware
         USZipCode,
         USZipCodePlus4,
         USPhoneNumber,
-        Email,
+        DomainName,
         CompanyName,
         WidgetName
     }
@@ -49,8 +45,8 @@ namespace AdamOneilSoftware
                 { Source.USZipCodePlus4, new RandomFormattedString(_rnd) { Format = "00000-0000" } },
                 { Source.USPhoneNumber, new RandomFormattedString(_rnd) { Format = "(000) 000-0000" } },
                 { Source.WidgetName, new RandomWidget(_rnd) },
-                { Source.CompanyName, new RandomResourceData("CompanyNames.txt", _rnd) }
-                //{ Source.Email, new RandomEmail(_rnd) }
+                { Source.CompanyName, new RandomResourceData("CompanyNames.txt", _rnd) },
+                { Source.DomainName, new RandomResourceData("DomainNames.txt", _rnd) }
             };
         }
 
@@ -177,7 +173,7 @@ namespace AdamOneilSoftware
             }
             else
             {
-                return _randomSources[source].GetData();                
+                return _randomSources[source].GetData();
             }
         }
 
