@@ -17,6 +17,7 @@ namespace Test.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string ItemName { get; set; }
+        public DateTime SomeDate { get; set; }
     }
 
     public class SexWeighted : IWeighted

@@ -36,13 +36,14 @@ namespace Test
                         new SexWeighted() { Letter = 'M', Factor = 3 },
                         new SexWeighted() { Letter = 'F', Factor = 1 }
                     }, m => m.Letter);
+                    p.SomeDate = tdg.RandomInRange(0, 30, i => new DateTime(2003, 1, 1).AddDays(i));
 
                 }, records =>
                 {
                     Console.WriteLine("--- batch ---");
                     foreach (var record in records)
                     {
-                        Console.WriteLine($"first = {record.FirstName}, last = {record.LastName}, email = {record.Email}");
+                        Console.WriteLine($"first = {record.FirstName}, last = {record.LastName}, email = {record.Email}, someDate = {record.SomeDate}");
                     }
                 });
 

@@ -50,8 +50,7 @@ namespace AdamOneilSoftware
             };
         }
 
-        public int BatchSize { get; set; } = 50;
-        public TimeSpan MaxRunTime { get; set; } = TimeSpan.FromMinutes(5);
+        public int BatchSize { get; set; } = 50;        
 
         public void Generate<TModel>(int recordCount, Action<TModel> create, Action<IEnumerable<TModel>> save) where TModel : new()
         {
@@ -153,6 +152,38 @@ namespace AdamOneilSoftware
         public TValue Random<TValue>(TValue[] source, Func<TValue, bool> predicate = null, int nullFrequency = 0)
         {
             return Random(source, item => item, predicate, nullFrequency);
+        }
+
+        /// <summary>
+        /// Returns a random int within a specified min/max range with a specified null frequency
+        /// </summary>
+        public int? RandomInRange(int min, int max, int nullFrequency = 0)
+        {
+            if (!IsRandomNull(nullFrequency))
+            {
+                var range = Enumerable.Range(min, max).ToArray();
+                return Random(range, null, nullFrequency);
+            }
+            else
+            {
+                return null;
+            }            
+        }
+
+        /// <summary>
+        /// Returns a random value of any type that can be derived from an int with a specified null frequency
+        /// </summary>
+        public TValue RandomInRange<TValue>(int min, int max, Func<int, TValue> createValue, int nullFrequency = 0)
+        {
+            if (!IsRandomNull(nullFrequency))
+            {
+                var range = Enumerable.Range(min, max).Select(i => createValue.Invoke(i)).ToArray();
+                return Random(range, null, nullFrequency);
+            }
+            else
+            {
+                return default(TValue);
+            }
         }
 
         private bool IsRandomNull(int nullFrequency)
