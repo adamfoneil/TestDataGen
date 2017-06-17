@@ -29,7 +29,7 @@ namespace Test
                     p.ItemName = tdg.Random(Source.WidgetName);
                     p.Sex = tdg.RandomWeighted(new SexWeighted[]
                     {
-                        new SexWeighted() { Letter = 'M', Factor = 30 },
+                        new SexWeighted() { Letter = 'M', Factor = 3 },
                         new SexWeighted() { Letter = 'F', Factor = 1 }
                     }, m => m.Letter);
 
