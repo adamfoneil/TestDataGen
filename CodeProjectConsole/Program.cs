@@ -45,7 +45,7 @@ namespace Test2
                             oi.OrderId = order.Id;
                             oi.ItemId = _tdg.Random(items, item => item.Id, item => item.OrganizationId == order.OrganizationId);
                             oi.Quantity = _tdg.RandomInRange(1, 25).Value;
-                            oi.UnitPrice = _db.Find<Item>(oi.ItemId).UnitPrice;
+                            oi.UnitPrice = _db.Find<Item>(cn, oi.ItemId).UnitPrice;
                             oi.ExtPrice = oi.Quantity * oi.UnitPrice;
                         } while (cn.Exists("[OrderItem] WHERE [OrderId]=@orderId AND [ItemId]=@itemId", new { orderId = oi.OrderId, itemId = oi.ItemId }));
                     }, records =>
