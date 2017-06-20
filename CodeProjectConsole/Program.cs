@@ -15,10 +15,10 @@ namespace Test2
         static void Main(string[] args)
         {
             //CreateOrgs();
-            //CreateItems();
+            CreateItems();
             //CreateCustomers();
             //CreateOrders();
-            CreateOrderItems();
+            //CreateOrderItems();
             
         }
 
@@ -34,23 +34,24 @@ namespace Test2
                 orgIds = cn.Query<int>("SELECT [Id] FROM [Organization]").ToArray();
                 items = cn.Query("SELECT [OrganizationId], [Id] FROM [Item]").ToArray();
                 orders = cn.Query("SELECT [OrganizationId], [Id] FROM [Order]").ToArray();
-
-                _tdg.BatchSize = 1;
+                
                 foreach (var order in orders)
                 {
-                    _tdg.Generate<OrderItem>(1, 7, oi =>
+                    _tdg.GenerateUnique<OrderItem>(cn, 1, 7, oi =>
                     {
-                        do
-                        {
-                            oi.OrderId = order.Id;
-                            oi.ItemId = _tdg.Random(items, item => item.Id, item => item.OrganizationId == order.OrganizationId);
-                            oi.Quantity = _tdg.RandomInRange(1, 25).Value;
-                            oi.UnitPrice = _db.Find<Item>(cn, oi.ItemId).UnitPrice;
-                            oi.ExtPrice = oi.Quantity * oi.UnitPrice;
-                        } while (cn.Exists("[OrderItem] WHERE [OrderId]=@orderId AND [ItemId]=@itemId", new { orderId = oi.OrderId, itemId = oi.ItemId }));
-                    }, records =>
+                        oi.OrderId = order.Id;
+                        oi.ItemId = _tdg.Random(items, item => item.Id, item => item.OrganizationId == order.OrganizationId);
+                        oi.Quantity = _tdg.RandomInRange(1, 25).Value;
+                        oi.UnitPrice = _db.Find<Item>(cn, oi.ItemId).UnitPrice;
+                        oi.ExtPrice = oi.Quantity * oi.UnitPrice;
+                    }, (connection, record) =>
                     {
-                        _db.SaveMultiple(cn, records);
+                        return connection.Exists(
+                            "[OrderItem] WHERE [OrderId]=@orderId AND [ItemId]=@itemId", 
+                            new { orderId = record.OrderId, itemId = record.ItemId });
+                    }, (record) =>
+                    {
+                        _db.Save(record);
                     });
                 }
             }
@@ -116,7 +117,7 @@ namespace Test2
                 orgIds = cn.Query<int>("SELECT [Id] FROM [Organization]").ToArray();
             }
 
-            _tdg.Generate<Item>(120, item =>
+            _tdg.Generate<Item>(250, item =>
             {
                 item.OrganizationId = _tdg.Random(orgIds);
                 item.Name = _tdg.Random(Source.WidgetName);

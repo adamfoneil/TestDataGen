@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 
 namespace AdamOneilSoftware
@@ -94,6 +95,32 @@ namespace AdamOneilSoftware
         {
             int recordCount = _rnd.Next(minRecordCount, maxRecordCount);
             Generate(recordCount, create, save);
+        }
+
+        /// <summary>
+        /// Generates a number of randomg records, checking to see if they violate a key before saving
+        /// </summary>
+        public void GenerateUnique<TModel>(IDbConnection connection, int recordCount, Action<TModel> create, Func<IDbConnection, TModel, bool> exists, Action<TModel> save) where TModel : new()
+        {
+            _rndFormatted = new RandomFormattedString(_rnd);
+           
+            for (int i = 0; i < recordCount; i++)
+            {
+                if (_cancellationToken.IsCancellationRequested) break;
+
+                TModel record = new TModel();                
+                do
+                {
+                    create.Invoke(record);
+                } while (exists.Invoke(connection, record));
+                save.Invoke(record);
+            }
+        }
+
+        public void GenerateUnique<TModel>(IDbConnection connection, int minRecordCount, int maxRecordCount, Action<TModel> create, Func<IDbConnection, TModel, bool> exists, Action<TModel> save) where TModel : new()
+        {
+            int records = _rnd.Next(minRecordCount, maxRecordCount);
+            GenerateUnique(connection, records, create, exists, save);
         }
 
         public TValue RandomWeighted<TValue, TModel>(TModel[] source, Func<TModel, TValue> select, Func<TModel, bool> predicate = null, int nullFrequency = 0) where TModel : IWeighted
