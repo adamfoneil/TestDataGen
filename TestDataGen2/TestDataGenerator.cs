@@ -108,10 +108,14 @@ namespace AdamOneilSoftware
             {
                 if (_cancellationToken.IsCancellationRequested) break;
 
-                TModel record = new TModel();                
+                TModel record = new TModel();
+                int attempts = 0;
+                const int maxAttempts = 100;
                 do
                 {
-                    create.Invoke(record);
+                    attempts++;
+                    if (attempts > maxAttempts) throw new Exception($"Couldn't generate a random {typeof(TModel).Name} record after {maxAttempts} tries. Exception was thrown to prevent infinite loop.");
+                    create.Invoke(record);                    
                 } while (exists.Invoke(connection, record));
                 save.Invoke(record);
             }

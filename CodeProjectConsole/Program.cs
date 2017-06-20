@@ -15,10 +15,10 @@ namespace Test2
         static void Main(string[] args)
         {
             //CreateOrgs();
-            CreateItems();
+            //CreateItems();
             //CreateCustomers();
             //CreateOrders();
-            //CreateOrderItems();
+            CreateOrderItems();
             
         }
 
