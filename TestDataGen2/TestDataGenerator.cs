@@ -98,7 +98,7 @@ namespace AdamOneilSoftware
         }
 
         /// <summary>
-        /// Generates a number of randomg records, checking to see if they violate a key before saving
+        /// Generates a number of random records, checking to see if they violate a key before saving
         /// </summary>
         public void GenerateUnique<TModel>(IDbConnection connection, int recordCount, Action<TModel> create, Func<IDbConnection, TModel, bool> exists, Action<TModel> save) where TModel : new()
         {
