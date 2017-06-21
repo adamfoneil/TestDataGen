@@ -19,7 +19,8 @@ namespace AdamOneilSoftware
         USPhoneNumber,
         DomainName,
         CompanyName,
-        WidgetName
+        WidgetName,
+        UniqueWidget
     }
 
     public class TestDataGenerator
@@ -45,7 +46,8 @@ namespace AdamOneilSoftware
                 { Source.USZipCode, new RandomFormattedString(_rnd) { Format = "00000" } },
                 { Source.USZipCodePlus4, new RandomFormattedString(_rnd) { Format = "00000-0000" } },
                 { Source.USPhoneNumber, new RandomFormattedString(_rnd) { Format = "(000) 000-0000" } },
-                { Source.WidgetName, new RandomWidget(_rnd) },
+                { Source.UniqueWidget, new RandomWidget(_rnd) },
+                { Source.WidgetName, new RandomResourceData("Widgets.txt", _rnd) },
                 { Source.CompanyName, new RandomResourceData("CompanyNames.txt", _rnd) },
                 { Source.DomainName, new RandomResourceData("DomainNames.txt", _rnd) }
             };
@@ -125,6 +127,20 @@ namespace AdamOneilSoftware
         {
             int records = _rnd.Next(minRecordCount, maxRecordCount);
             GenerateUnique(connection, records, create, exists, save);
+        }
+
+        public void GenerateUpTo<TModel>(IDbConnection connection, int maxCount, Func<IDbConnection, int> getRecordCount, Action<TModel> create, Action<IEnumerable<TModel>> save) where TModel : new()
+        {
+            int currentCount = getRecordCount.Invoke(connection);
+            int generate = maxCount - currentCount;
+            if (generate > 0) Generate(generate, create, save);
+        }
+
+        public void GenerateUniqueUpTo<TModel>(IDbConnection connection, int maxCount, Func<IDbConnection, int> getRecordCount, Action<TModel> create, Func<IDbConnection, TModel, bool> exists, Action<TModel> save) where TModel : new()
+        {
+            int currentCount = getRecordCount.Invoke(connection);
+            int generate = maxCount - currentCount;
+            if (generate > 0) GenerateUnique(connection, generate, create, exists, save);
         }
 
         public TValue RandomWeighted<TValue, TModel>(TModel[] source, Func<TModel, TValue> select, Func<TModel, bool> predicate = null, int nullFrequency = 0) where TModel : IWeighted
