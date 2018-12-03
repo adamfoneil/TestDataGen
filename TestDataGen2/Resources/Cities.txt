@@ -137,7 +137,6 @@ Bonne Terre
 Boomer
 Bourbon
 Bowdon
-Bowling Green St University
 Boy River
 boylston
 Bracebridge
@@ -161,7 +160,6 @@ Brooklyn
 Brooksville
 Brown Jug Corner
 Brownstown Township
-BROWNSTOWN TWP.
 Brownsville
 Browntown
 Bruington
@@ -170,18 +168,17 @@ Bryn Mawr
 Buffalo
 Bullocktown
 Bumpass
-BURBANK
+Burbank
 Burley
 Burnham
 Burr Ridge
 Burson
 Burton
-Buttonwillow
+Button Willow
 Byrnes Mill
 Cadmus
 Caesarea
 Cal Park
-CALABASAS
 Calabasis
 Caladen
 Caledon East
@@ -237,8 +234,7 @@ Champion
 Chanhassen
 Chantilly
 Chapel Hill
-Chapel Hill Mall
-Charlottesvle
+Charlottesville
 Charlton City
 Chatham
 Cheektowaga
@@ -258,9 +254,8 @@ Chrisman
 Chrisney
 Christiansburg
 Christmas
-Church hill
+Church Hill
 Churubusco
-City of Industry
 Clackamas
 Clairton
 Clawson
@@ -320,7 +315,7 @@ Corunna
 Coshocton
 COSTA MESA
 Cottage Grove
-COTTONWOOD
+Cottonwood
 Country Club Hills
 Courtland
 Coventry
@@ -422,7 +417,6 @@ Bear Lake
 Beaufort
 Beaumont
 Beavercreek
-Beaverton-Farmngtn Mall Cpu
 Becker
 Bedford
 Beechgrove
@@ -463,7 +457,6 @@ Blackwell
 Blairs
 Blakes
 Blanch
-Bland Correctional Farm
 Blasdell
 Block Island
 Blodgett
@@ -655,7 +648,7 @@ Cornelia
 Cornelius
 Cornell
 Cornland
-CORONA
+Corona
 Corvallis
 cottom
 Cotton Valley
@@ -682,8 +675,6 @@ Croton
 Crozet
 Crumpler
 Crystal Lake
-Ctry Club Hls
-CUDAHY
 Culp Creek
 Cumberland Furnace
 Cutler
@@ -692,7 +683,7 @@ Dacula
 Dallas City
 Dalton City
 Dalzell
-danbury
+Danbury
 Danville
 Darbydale
 Dardanelle
@@ -745,7 +736,6 @@ Argonne
 Ariton
 Arthur
 Arvonia
-Ashevillle
 Ashville
 Assumption
 Atalla
@@ -777,8 +767,6 @@ Bates City
 Battle Creek
 Bauxite
 Bay City
-Bay St Louis
-Bay St. Louis
 Bayville
 Beamsville
 Bear Creek
