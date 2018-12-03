@@ -753,8 +753,6 @@ Bagley
 Bailey
 Baileys Crossroads
 Bakersfield
-Bala Cynwyd
-Bala Cynywd
 Ballard
 Baltic
 Banney Lake
@@ -810,9 +808,7 @@ Blanchardville
 Blandford
 Blenheim
 Blenhiem
-Blk Mtn
-Blk Riv Falls
-Blmgtn
+Black Mountain
 Bloomdale
 Bloomery
 Bloomfield Twp
@@ -3646,7 +3642,6 @@ Birdsnest
 Birmingham
 Blachly
 Black Earth
-Black Mtn
 Blacksburg
 Blackstone
 Blackville
