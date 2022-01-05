@@ -4,7 +4,7 @@ I'm updating this for .NET6, because I have a new need for it.
 
 Please see the [test](https://github.com/adamfoneil/TestDataGen/blob/master/DataGen.Test/InMemory.cs) to see a simple case in action.
 
-Documentation below is out of date, but gives some useful context.
+Documentation below is out of date, but gives some context.
 
 ---
 
