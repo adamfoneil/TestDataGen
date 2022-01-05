@@ -2,8 +2,10 @@
 
 namespace DataGen.Test.Models
 {
-    public class Customer
+    public record Customer
     {        
+        public int Id { get; set; }
+
         public int OrganizationId { get; set; }
 
         [Required]
@@ -33,5 +35,7 @@ namespace DataGen.Test.Models
         [MaxLength(100)]
         [Required]
         public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
     }
 }

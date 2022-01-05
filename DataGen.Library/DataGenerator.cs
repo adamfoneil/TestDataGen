@@ -50,7 +50,7 @@ namespace DataGen
 
         public int BatchSize { get; set; } = 50;        
 
-        public async Task GenerateAsync<TModel>(int recordCount, Func<TModel> create, Func<IEnumerable<TModel>, Task> save) where TModel : new()
+        public async Task GenerateAsync<TModel>(int recordCount, Func<int, TModel> create, Func<IEnumerable<TModel>, Task> save) where TModel : new()
         {
             _rndFormatted = new RandomFormattedString(_rnd);
 
@@ -62,7 +62,7 @@ namespace DataGen
                 if (_cancellationToken.IsCancellationRequested) break;
 
                 recordNum++;
-                TModel record = create.Invoke();
+                TModel record = create.Invoke(i);
                 records.Add(record);
 
                 if (recordNum == BatchSize)
@@ -87,7 +87,7 @@ namespace DataGen
         /// <param name="maxRecordCount">Hi bound of random record count</param>
         /// <param name="create">Action that initializes the generated record</param>
         /// <param name="save">Action that saves the generated records to the database according to BatchSize</param>
-        public async Task GenerateAsync<TModel>(int minRecordCount, int maxRecordCount, Func<TModel> create, Func<IEnumerable<TModel>, Task> save) where TModel : new()
+        public async Task GenerateAsync<TModel>(int minRecordCount, int maxRecordCount, Func<int, TModel> create, Func<IEnumerable<TModel>, Task> save) where TModel : new()
         {
             int recordCount = _rnd.Next(minRecordCount, maxRecordCount);
             await GenerateAsync(recordCount, create, save);
@@ -125,7 +125,7 @@ namespace DataGen
             await GenerateUniqueAsync(connection, records, create, exists, save);
         }
 
-        public async Task GenerateUpToAsync<TModel>(IDbConnection connection, int maxCount, Func<IDbConnection, Task<int>> getRecordCount, Func<TModel> create, Func<IEnumerable<TModel>, Task> save) where TModel : new()
+        public async Task GenerateUpToAsync<TModel>(IDbConnection connection, int maxCount, Func<IDbConnection, Task<int>> getRecordCount, Func<int, TModel> create, Func<IEnumerable<TModel>, Task> save) where TModel : new()
         {
             int currentCount = await getRecordCount.Invoke(connection);
             int generate = maxCount - currentCount;
