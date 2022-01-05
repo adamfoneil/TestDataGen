@@ -62,16 +62,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeProjectModels\CodeProjectModels.csproj">
-      <Project>{cc5141fd-8179-4cb9-9e1b-7ffa05d85dd5}</Project>
-      <Name>CodeProjectModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestDataGen2\TestDataGen2.csproj">
-      <Project>{b67b5bb3-bc7a-42f4-8e74-33cad3e70890}</Project>
-      <Name>TestDataGen2</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

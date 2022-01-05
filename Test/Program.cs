@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Test.Models;
-using AdamOneilSoftware;
+using DataGen;
 using Dapper;
 
 namespace Test

@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>DataGen</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>AO.DataGen</PackageId>
+    <Version>1.1.0</Version>
+    <Description>A test data generator for .NET6</Description>
+    <Copyright>Copyright (c) 2022 Adam O'Neil</Copyright>
+    <PackageProjectUrl>https://github.com/adamfoneil/TestDataGen</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamfoneil/TestDataGen</RepositoryUrl>
+    <PackageReleaseNotes>Targeting .NET6 with async methods</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Cities.txt" />
+    <None Remove="Resources\CompanyNames.txt" />
+    <None Remove="Resources\DomainNames.txt" />
+    <None Remove="Resources\FirstNames.txt" />
+    <None Remove="Resources\LastNames.txt" />
+    <None Remove="Resources\StreetNames.txt" />
+    <None Remove="Resources\USStates.txt" />
+    <None Remove="Resources\Widgets.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Cities.txt" />
+    <EmbeddedResource Include="Resources\CompanyNames.txt" />
+    <EmbeddedResource Include="Resources\DomainNames.txt" />
+    <EmbeddedResource Include="Resources\FirstNames.txt" />
+    <EmbeddedResource Include="Resources\LastNames.txt" />
+    <EmbeddedResource Include="Resources\StreetNames.txt" />
+    <EmbeddedResource Include="Resources\USStates.txt" />
+    <EmbeddedResource Include="Resources\Widgets.txt" />
+  </ItemGroup>
+
+</Project>
