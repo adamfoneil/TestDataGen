@@ -1,4 +1,6 @@
-﻿namespace DataGen
+﻿using System;
+
+namespace DataGen
 {
     internal interface IRandomData
     {

@@ -1,7 +1,12 @@
-﻿namespace DataGen
+﻿using System;
+using System.Collections.Generic;
+
+namespace DataGen
 {
     internal class RandomFormattedString : IRandomData
     {
+        private Random random;
+
         public RandomFormattedString(Random rnd)
         {
             Random = rnd;            
