@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <RootNamespace>DataGen</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>AO.DataGen</PackageId>
-    <Version>1.1.1</Version>
-    <Description>A test data generator for .NET6</Description>
+    <PackageId>AO.DataGen.NET5</PackageId>
+    <Version>1.1.0</Version>
+    <Description>A test data generator for .NET5</Description>
     <Copyright>Copyright (c) 2022 Adam O'Neil</Copyright>
     <PackageProjectUrl>https://github.com/adamfoneil/TestDataGen</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/TestDataGen</RepositoryUrl>
