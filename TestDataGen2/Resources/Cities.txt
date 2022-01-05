@@ -56,7 +56,7 @@ Avalon
 Avon Lake
 Bad Axe
 Bailey Island
-BALDWYN
+Baldwyn
 Ball Ground
 Balsam
 Balsam Grove
@@ -313,7 +313,7 @@ Corryton
 Cortland
 Corunna
 Coshocton
-COSTA MESA
+Costa Mesa
 Cottage Grove
 Cottonwood
 Country Club Hills
