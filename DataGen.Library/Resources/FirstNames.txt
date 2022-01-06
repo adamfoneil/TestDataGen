@@ -188,7 +188,6 @@ Anne
 Suzanne
 Dennis
 Rose
-Return to field
 Tony
 Kenneth
 Veronica
@@ -746,7 +745,6 @@ Edgar
 Roberto
 Tessa
 Gilbert
-Trap
 Duane
 Allie
 Chelsey
