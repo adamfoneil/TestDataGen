@@ -7,13 +7,15 @@
     <RootNamespace>DataGen</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>AO.DataGen.NET5</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Description>A test data generator for .NET5</Description>
     <Copyright>Copyright (c) 2022 Adam O'Neil</Copyright>
     <PackageProjectUrl>https://github.com/adamfoneil/TestDataGen</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/TestDataGen</RepositoryUrl>
     <PackageReleaseNotes>Targeting .NET5 for compatibility with current use case</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>Adam O'Neil</Authors>
+    <Product>AO.DataGen.NET5</Product>
   </PropertyGroup>
 
   <ItemGroup>
